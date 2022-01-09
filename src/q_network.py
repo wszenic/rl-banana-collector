@@ -31,7 +31,7 @@ class QNetwork(nn.Module):
         val = F.relu(self.linear_2_state(val))
         val = F.relu(self.linear_3_state(val))
 
-        res = val + adv - torch.mean(adv, dim=1)
+        res = val + adv - torch.mean(adv)
 
         return res
 

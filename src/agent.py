@@ -1,3 +1,4 @@
+import random
 from collections import namedtuple
 
 import numpy as np
@@ -48,17 +49,17 @@ class Agent:
                 self.learn(self.env_feedback(*experience_replay))
 
     def act(self, state, eps):
-        state = torch.Tensor(state).to(self.device)
+        state = torch.from_numpy(state).float().unsqueeze(0)
         action_values = self.__get_state_action_values(state)
         return self.__get_epsilon_greedy_action(action_values, eps)
 
     def learn(self, env_data):
         # env_data = self.env_feedback(environment_feedback)
 
-        q_next_targets = self.q_network_target(torch.Tensor(env_data.next_state))
+        q_next_targets = self.q_network_target(torch.Tensor(env_data.next_state)).detach().max(1)[0].unsqueeze(1)
         q_target = env_data.reward + (self.gamma * q_next_targets * (1 - env_data.done))
 
-        q_expected = self.q_network_local(env_data.state)
+        q_expected = self.q_network_local(env_data.state).gather(1, env_data.action)
         self.__torch_learn(q_expected, q_target)
 
     def __torch_learn(self, q_expected, q_target):
@@ -78,10 +79,10 @@ class Agent:
         return actions_values
 
     def __get_epsilon_greedy_action(self, action_values, eps):
-        if np.random.uniform() > eps:
+        if random.random() > eps:
             return np.argmax(action_values.cpu().data.numpy())
         else:
-            return np.random.choice(np.arange(self.action_size))
+            return random.choice(np.arange(self.action_size))
 
     def __soft_update(self, local_model, target_model):
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
