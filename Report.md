@@ -67,4 +67,5 @@ provide intuition regarding parameters and required model complexity)
 * after the final agent was ran a couple of times, it was noticed that the agent has a specific problem - if a good banana is approached
 in a path which is perpendicular to a wall, the agent sometimes gets stuck with its "vision" blocked by the wall. Perhaps more training
 addressing this specific issue would be required - like giving an additional, small reward for having unblocked vision or 
-subtracting reward for seconds spent in the blocked vision state
+subtracting reward for seconds spent in the blocked vision state. By far, the easiest to implement in the current state would
+be a penalty for having zero velocity, as it would force the agent to leave a blocked state

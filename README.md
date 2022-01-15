@@ -58,8 +58,14 @@ and then continues on the base level until the rest of the training. The exact v
 ### Running the example
 To run the example, it is necessary to have a banana unity environment in a path determined in the `src.config.py` file.
 
-To setup the environment run the following commands:
-```angular2html
+To download the unity environment, follow one of the three links provided below:
+* Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux.zip)
+* Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
+* Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
+* Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
+
+To setup the packages run the following commands:
+```
 pip install virtualenv
 virtualenv venv
 source /venv/bin/activate
