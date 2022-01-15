@@ -154,3 +154,5 @@ cython_debug/
 Banana.app
 
 /Banana.app.zip
+
+.neptune

@@ -13,3 +13,5 @@ pandas
 scipy
 ipykernel
 neptune-client
+unityagents
+click

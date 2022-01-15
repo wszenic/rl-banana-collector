@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from config import MID_1_SIZE, MID_2_SIZE
+from src.config import MID_1_SIZE, MID_2_SIZE
 
 
 class QNetwork(nn.Module):

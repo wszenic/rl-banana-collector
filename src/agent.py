@@ -4,24 +4,27 @@ from collections import namedtuple
 import numpy as np
 import torch
 
-from config import UPDATE_INTERVAL, BATCH_SIZE, BUFFER_SIZE, GAMMA, TAU, LEARNING_RATE
-from memory import ReplayBuffer
-from q_network import QNetwork
+from src.config import UPDATE_INTERVAL, BATCH_SIZE, BUFFER_SIZE, GAMMA, TAU, LEARNING_RATE, CHECKPOINT_SAVE_PATH
+from src.memory import ReplayBuffer
+from src.q_network import QNetwork
 
 
 class Agent:
 
-    def __init__(self, state_size: int, action_size: int):
+    def __init__(self, state_size: int, action_size: int, read_saved_model=False):
 
         self.state_size = state_size
         self.action_size = action_size
-
-        self.env_feedback = namedtuple('env_feedback', ('state', 'action', 'reward', 'next_state', 'done'))
 
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
 
         self.q_network_local = QNetwork(state_size, action_size).to(self.device)
         self.q_network_target = QNetwork(state_size, action_size).to(self.device)
+
+        if read_saved_model:
+            saved_model = torch.load(CHECKPOINT_SAVE_PATH)
+            self.q_network_local.load_state_dict(saved_model)
+            self.q_network_target.load_state_dict(saved_model)
 
         self.optimizer = torch.optim.Adam(self.q_network_local.parameters(), lr=LEARNING_RATE)
 
@@ -54,8 +57,6 @@ class Agent:
         return self.__get_epsilon_greedy_action(action_values, eps)
 
     def learn(self, env_data):
-        # env_data = self.env_feedback(environment_feedback)
-
         q_next_targets = self.q_network_target(torch.Tensor(env_data.next_state)).detach().max(1)[0].unsqueeze(1)
         q_target = env_data.reward + (self.gamma * q_next_targets * (1 - env_data.done))
 
