@@ -56,4 +56,12 @@ The *epsilon* provided for the epsilon-greedy strategy for picking actions decre
 and then continues on the base level until the rest of the training. The exact values can be found in `src.config.py` file.
 
 ### Running the example
-To run the example, it is necessary to have a banana unity environment 
+To run the example, it is necessary to have a banana unity environment in a path determined in the `src.config.py` file.
+
+After this is done, simply run a trained agent with:
+
+`python main.py eval`
+
+or train a new agent with
+
+`python main.py train`
