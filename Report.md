@@ -11,12 +11,15 @@ reaches higher reward values and reaches them faster. The model consists of:
 * advantage layers
 
 These layers are meant to establish the value of a given state and of all actions separately and then combine them into a final result.
-For each of the layer block, a simillar structure was used:
+For each of the layer block, a similar structure was used:
 * Linear layer (state size=37 -> 128 neurons)
 * Linear layer (128 neurons -> 64 neurons)
 * Linear layer (64 neurons -> output neurons)
 
-The output neurons value was 1 and *action size=4* in state and advantage blocks respectively.
+The output neurons value was 1 and *action size=4* in state and advantage blocks respectively. The outputs of both of
+the blocks are then added together and the mean advantage value is subtracted from the final score.
+
+### Training results, experiments
 
 Regarding the numbers of the neurons - it was found that a smaller network (with 64 neurons instead of in first and second layer)
 also does work for the problem. However, the average of 13 wasn't always reached and the training took much more episodes
@@ -27,7 +30,8 @@ was 12.51, so not quite filling the objective. The exact details and interactive
 ![](plots/learning_smaller_network.png)
 
 The final plot for the larger network shows a steep learning process between 300 and 500 epochs and then a plateau. 
-Therefore, larger number of parameters is needed for the model to achieve the given objective value
+Therefore, larger number of parameters is needed for the model to achieve the given objective value. The whole process 
+was ran for 2000 epochs, although the average of 13 (which is the objective of the task) was reached after ca. 570 epochs.
 
 ![](plots/learning_process.png)
 
