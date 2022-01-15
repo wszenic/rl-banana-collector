@@ -58,6 +58,14 @@ and then continues on the base level until the rest of the training. The exact v
 ### Running the example
 To run the example, it is necessary to have a banana unity environment in a path determined in the `src.config.py` file.
 
+To setup the environment run the following commands:
+```angular2html
+pip install virtualenv
+virtualenv venv
+source /venv/bin/activate
+pip install -r requirements.txt
+```
+
 After this is done, simply run a trained agent with:
 
 `python main.py eval`
